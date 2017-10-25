@@ -21,7 +21,7 @@ public class TheGod : MonoBehaviour {
 	static GameObject lastPiece;
 
 
-	static bok;
+	 
 
 	//static MouseRotation mouseRotation;
 
