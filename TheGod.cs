@@ -16,9 +16,17 @@ public class TheGod : MonoBehaviour {
 
 	static int cloneCount = 1;
 
-	static Vector3 deviation = new Vector3 (0.0f, 0.0f, 0.0f);
+	static bool isThereAClone = false;
 
 	static GameObject lastPiece;
+
+	static string[] objectDetails = { 
+		"0",	//cop
+		"f1", //piece1
+		"r0", //piece2
+		"u0"
+	
+	};
 
 
 	 
@@ -112,10 +120,44 @@ public class TheGod : MonoBehaviour {
 	static void integrateToMainPart() {
 
 		GameObject mainPart = GameObject.Find ("MainPart");
-		if (deviation == new Vector3 (0.0f, 0.0f, 0.0f)) {
+		if (isThereAClone == false) {
 			piece.transform.position = mainPart.transform.position + MainPart.hitNormal;
 		} else {
-			piece.transform.position = lastPiece.transform.position + MainPart.hitNormal;
+
+			Vector3 forward = lastPiece.transform.forward;
+			Vector3 up = lastPiece.transform.up;
+			Vector3 right = lastPiece.transform.right;
+
+		
+
+			switch (objectDetails[slaveClickCounter])
+			{
+			case "f0":
+				piece.transform.position = lastPiece.transform.position - forward;
+				break;
+			case "f1":
+				piece.transform.position = lastPiece.transform.position + forward;
+				break;
+			case "u0":
+				piece.transform.position = lastPiece.transform.position - up;
+				break;
+			case "u1":
+				piece.transform.position = lastPiece.transform.position + up;
+				break;
+			case "r0":
+				piece.transform.position = lastPiece.transform.position - right;
+				break;
+			case "r1":
+				piece.transform.position = lastPiece.transform.position + right;
+				break;
+			default:
+				Debug.Log("Error in integrateToMainPart");
+				break;
+			}
+				
+
+
+
 		}
 		piece.transform.rotation = mainPart.transform.rotation;
 		piece.transform.parent = mainPart.transform;
@@ -149,9 +191,9 @@ public class TheGod : MonoBehaviour {
 		oldSlaveClick = 0;
 		//oldMasterClick = 0;
 		lastPiece = piece;
-		deviation = deviation + piece.transform.position;
-
+		isThereAClone = true;
 	}
+
 
 
 
