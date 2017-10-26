@@ -26,7 +26,14 @@ public class TheGod : MonoBehaviour {
 	//static MouseRotation mouseRotation;
 
 
+	static Vector3[] objectSize = 
+	{
+		 new Vector3(0.0f,0.0f,0.0f),   //bos
+		 new Vector3(0.0f,0.0f,0.0f)
 
+
+
+	};
 
 
 	static Vector3 newCoor; 

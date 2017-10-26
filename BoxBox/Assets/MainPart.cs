@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainPart : MonoBehaviour {
-
-	Vector3 objForward;
-	Vector3 objUp;
-	Vector3 objRight;
-	static public Vector3 hitNormal;
-
-
-	int clickCounter = 0;
+	int Piecenumber = 0;
 
 	// Use this for initialization
 	void Start () {
+		TheGod.objectSize [Piecenumber] = gameObject.transform.localScale;
+
 		
 	}
 	
@@ -22,7 +17,7 @@ public class MainPart : MonoBehaviour {
 		
 	}
 
-	void OnMouseDown () {
+	/*void OnMouseDown () {
 
 		//Bunlar yüzey belirleyici
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,13 +29,13 @@ public class MainPart : MonoBehaviour {
 		GetHitFace(hit);
 		//Bunlar yüzey belirleyici
 
-	}
+	}*/
 
 
 
 
 		
-	public void GetHitFace(RaycastHit hit) {
+	/*public void GetHitFace(RaycastHit hit) {
 
 		hitNormal = hit.normal;
 		Debug.Log (hitNormal);
@@ -82,6 +77,6 @@ public class MainPart : MonoBehaviour {
 		}
 
 		//return MCFace.Error;
-	}
+	}*/
 
 }

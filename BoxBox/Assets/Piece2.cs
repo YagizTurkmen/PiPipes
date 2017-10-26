@@ -9,6 +9,8 @@ public class Piece2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		TheGod.objectSize [Piecenumber] = gameObject.transform.localScale;
+
 
 	}
 
