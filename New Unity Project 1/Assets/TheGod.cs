@@ -45,6 +45,21 @@ public class TheGod : MonoBehaviour {
 
 	};
 
+	static Vector3[] objectDegrees = 
+	{
+		new Vector3(0.0f,0.0f,0.0f),	//main
+		new Vector3(1.0f,1.0f,1.0f), 	//piece1
+		//new Vector3(Vector3.right * 90),  	//piece2
+		new Vector3(1.0f,2.0f,1.0f),  	//piece3
+		new Vector3(0.0f,0.0f,0.0f) 	//piece4
+
+
+
+	};
+
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -127,7 +142,11 @@ public class TheGod : MonoBehaviour {
 			Vector3 forward = lastPiece.transform.forward;
 			Vector3 up = lastPiece.transform.up;
 			Vector3 right = lastPiece.transform.right;
+			
+			piece.transform.rotation = lastPiece.transform.rotation;
+			piece.transform.Rotate (Vector3.forward * -90);
 
+			
 		
 
 			switch (objectDetails[lastCloneNumber])
@@ -155,8 +174,8 @@ public class TheGod : MonoBehaviour {
 				break;
 
 		}
-		piece.transform.rotation = mainPart.transform.rotation;
-		//piece.transform.Rotate (Vector3.right * 90);
+
+
 		piece.transform.parent = mainPart.transform;
 		Destroy (piece.GetComponent<MouseRotation>()); 
 		piece.name = "Piece" + pieceNumber + "Clone" + cloneCount;
@@ -174,13 +193,20 @@ public class TheGod : MonoBehaviour {
 
 	public static void MakePermenant()
 	{
-		if(pieceNumber != 0){
+		if(pieceNumber != 0){	
 		cloneCount++;
 		lastCloneNumber = pieceNumber;
 		lastPiece = piece;
 		isThereAClone = false;
 	}
 	}
+
+	/*public static Vector3 TranslationInCoor ()
+	{
+
+
+
+	}*/
 
 
 
