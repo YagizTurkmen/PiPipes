@@ -33,7 +33,7 @@ public class TheGod : MonoBehaviour {
 
 
 
-	static Vector3[] objectSize = 
+	/*static Vector3[] objectSize = 
 	{
 		new Vector3(1.0f,1.0f,1.0f),	//main
 		new Vector3(1.0f,1.0f,1.0f), 	//piece1
@@ -43,7 +43,7 @@ public class TheGod : MonoBehaviour {
 
 
 
-	};
+	};*/
 
 
 	// Use this for initialization
@@ -62,9 +62,9 @@ public class TheGod : MonoBehaviour {
 
 	static public void getSlaveClick (int incomingSlaveClick) {
 
-		Debug.Log (objectSize[1]);
+		/*Debug.Log (objectSize[1]);
 		Debug.Log (objectSize[2]);
-		Debug.Log (objectSize[3]);
+		Debug.Log (objectSize[3]);*/
 		
 		oldPieceNumber = pieceNumber;
 		pieceNumber = incomingSlaveClick;
@@ -109,7 +109,7 @@ public class TheGod : MonoBehaviour {
 	static void CreatePiece () {
 
 		isThereAClone = true;
-		piece = GameObject.Find ("Piece" + pieceNumber);
+		piece = GameObject.Find ("GameObject"); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
 		piece = (GameObject)Instantiate (piece);
 		integrateToMainPart ();
 
@@ -119,7 +119,10 @@ public class TheGod : MonoBehaviour {
 
 	static void integrateToMainPart() {
 
-		GameObject mainPart = GameObject.Find ("MainPart");
+		GameObject mainPart = GameObject.Find ("GameObjectMain"); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
+
+		piece.transform.position = mainPart.transform.position;
+
 
 		if (lastPiece == null)
 			lastPiece = mainPart;
@@ -128,34 +131,8 @@ public class TheGod : MonoBehaviour {
 			Vector3 up = lastPiece.transform.up;
 			Vector3 right = lastPiece.transform.right;
 
-		
 
-			switch (objectDetails[lastCloneNumber])
-			{
-			case "f0":
-				piece.transform.position = lastPiece.transform.position - forward*(objectSize [pieceNumber].z+objectSize [lastCloneNumber].z)/2;
-				break;
-			case "f1":
-				piece.transform.position = lastPiece.transform.position + forward*(objectSize [pieceNumber].z+objectSize [lastCloneNumber].z)/2;
-				break;
-			case "u0":
-				piece.transform.position = lastPiece.transform.position - up*(objectSize [pieceNumber].y+objectSize [lastCloneNumber].y)/2;
-				break;
-			case "u1":
-				piece.transform.position = lastPiece.transform.position + up*(objectSize [pieceNumber].y+objectSize [lastCloneNumber].y)/2;
-				break;
-			case "r0":
-				piece.transform.position = lastPiece.transform.position - right*(objectSize [pieceNumber].x+objectSize [lastCloneNumber].x)/2;
-				break;
-			case "r1":
-				piece.transform.position = lastPiece.transform.position + right*(objectSize [pieceNumber].x+objectSize [lastCloneNumber].x)/2;
-				break;
-			default:
-				Debug.Log("Error in integrateToMainPart");
-				break;
-
-		}
-		piece.transform.rotation = mainPart.transform.rotation;
+		//piece.transform.rotation = mainPart.transform.rotation;
 		//piece.transform.Rotate (Vector3.right * 90);
 		piece.transform.parent = mainPart.transform;
 		Destroy (piece.GetComponent<MouseRotation>()); 
