@@ -5,9 +5,9 @@ public class Piece2 : MonoBehaviour {
 
 	int Piecenumber = 2;
 
-	bool leftOut = true;
+	//bool leftOut = true;
 
-		
+
 	// Use this for initialization
 	void Start () {
 
@@ -24,11 +24,11 @@ public class Piece2 : MonoBehaviour {
 
 	void OnMouseDown () {
 
-		Vector3 forward = transform.forward;
+		/*Vector3 forward = transform.forward;
 		Vector3 up = transform.up;
-		Vector3 right = transform.right;
-
-		if (gameObject.name == "Piece" + Piecenumber) {
+		Vector3 right = transform.right;*/
+		Debug.Log (gameObject.name );
+		if (gameObject.name == "Piece" + Piecenumber + "Child") {
 			TheGod.getSlaveClick (incomingSlaveClick: Piecenumber);
 		}
 
@@ -61,6 +61,7 @@ public class Piece2 : MonoBehaviour {
 			leftOut = true;
 
 		}*/
+			
 
 		
 

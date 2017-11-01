@@ -9,11 +9,15 @@ public class TheGod : MonoBehaviour {
 
 	static GameObject piece;
 	static GameObject lastPiece;
+	static GameObject purePiece;
+	static GameObject endPoint;
 
 	static int cloneCount = 1;
 	static bool isThereAClone = false;
 
 	static int lastCloneNumber = 0;
+
+	static bool leftOut = true;
 
 	//static int HowmanyDidObjectCreated = 5;
 
@@ -92,13 +96,17 @@ public class TheGod : MonoBehaviour {
 
 				} else {*/
 
-					if (oldPieceNumber != pieceNumber) {
+			if (oldPieceNumber != pieceNumber) {
 
-						//DEĞİŞTİRME
-						ChangePiece ();
+				//DEĞİŞTİRME
+				ChangePiece ();
 					
 
-				}
+			} else {
+
+				enterChanger ();
+
+			}
 
 			}
 
@@ -108,8 +116,10 @@ public class TheGod : MonoBehaviour {
 
 	static void CreatePiece () {
 
+		leftOut = true;
+
 		isThereAClone = true;
-		piece = GameObject.Find ("GameObject"); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
+		piece = GameObject.Find ("Piece" + pieceNumber); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
 		piece = (GameObject)Instantiate (piece);
 		integrateToMainPart ();
 
@@ -119,9 +129,21 @@ public class TheGod : MonoBehaviour {
 
 	static void integrateToMainPart() {
 
-		GameObject mainPart = GameObject.Find ("GameObjectMain"); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
+		GameObject mainPart = GameObject.Find ("MainPart"); // DEĞİŞTİRDİM DEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİMDEĞİŞTİRDİM
 
-		piece.transform.position = mainPart.transform.position;
+		purePiece = piece.transform.GetChild (0).gameObject;
+
+		endPoint = purePiece.transform.GetChild (0).gameObject;
+
+
+
+		piece.transform.position = mainPart.transform.position; 
+
+		//piece.transform.Rotate (Vector3.up * 180);
+
+		GameObject mainPart2 = GameObject.Find ("MainPartChild");
+
+		piece.transform.LookAt (mainPart2.transform);
 
 
 		if (lastPiece == null)
@@ -137,7 +159,7 @@ public class TheGod : MonoBehaviour {
 		piece.transform.parent = mainPart.transform;
 		Destroy (piece.GetComponent<MouseRotation>()); 
 		piece.name = "Piece" + pieceNumber + "Clone" + cloneCount;
-
+		purePiece.name = "Piece" + pieceNumber + "ChildClone" + cloneCount;
 
 
 	}
@@ -156,7 +178,53 @@ public class TheGod : MonoBehaviour {
 		lastCloneNumber = pieceNumber;
 		lastPiece = piece;
 		isThereAClone = false;
+		}
 	}
+
+	public static void enterChanger() {
+
+
+		Vector3 forward = purePiece.transform.forward;
+		Vector3 up = purePiece.transform.up;
+		Vector3 right = purePiece.transform.right;
+
+		if (leftOut == true) {
+
+
+
+
+			purePiece.transform.position += right * 0.5f;
+			purePiece.transform.position += up * -0.5f;
+
+			endPoint.transform.position += right * 1.75f;
+			endPoint.transform.position += up * 0.75f;
+
+			purePiece.transform.Rotate (Vector3.forward * 90f);
+			purePiece.transform.Rotate (Vector3.up * 180f);
+
+
+
+			leftOut = false;
+
+		} else {
+
+			purePiece.transform.position += right * -0.5f;
+			purePiece.transform.position += up * 0.5f;
+
+			endPoint.transform.position += right * -1.75f;
+			endPoint.transform.position += up * -0.75f;
+
+			purePiece.transform.Rotate (Vector3.forward * 90f);
+			purePiece.transform.Rotate (Vector3.up * -180f);
+
+
+
+
+			leftOut = true;
+
+		}
+
+
 	}
 
 

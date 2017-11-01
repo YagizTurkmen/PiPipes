@@ -20,7 +20,7 @@ public class Joystick : MonoBehaviour {
 	void OnMouseDrag()
 	{
 
-		mainPart = GameObject.Find ("MainPart");
+		mainPart = GameObject.Find ("GameObjectMain");
 		float rotX = Input.GetAxis("Mouse X")*rotSpeed*Mathf.Deg2Rad;
 		float rotY = Input.GetAxis("Mouse Y")*rotSpeed*Mathf.Deg2Rad;
 
