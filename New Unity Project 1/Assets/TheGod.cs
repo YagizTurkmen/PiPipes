@@ -14,15 +14,45 @@ public class TheGod : MonoBehaviour
 	static GameObject endPoint;
 	static GameObject lookAtPoint;
 	static GameObject mainPart;
+	static GameObject lastPiece;
+
 
 	static Vector3 endPointPos;
 	static Transform lookAtPos;
+
 
 	static int cloneCount = 1;
 	static bool isThereAClone = false;
 
 	static bool otherOut = true;
 
+
+	/*static int[][] objectDetails = {
+	
+		{0,1,2},
+		{0,1,2}
+
+	};*/
+
+	static float[,] objectDetails = new float[,] {
+		
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+		{ 0.0f, 0.5f, -0.5f, 0.0f, 1.75f, 0.75f, 90f, 0f, 180f },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }
+
+	};
+
+	static bool[] isSymmetric = {
+	
+		true,
+		true,
+		false,
+		true,
+		true
+	
+	};
 
 
 	// Use this for initialization
@@ -35,6 +65,7 @@ public class TheGod : MonoBehaviour
 
 		lookAtPoint = GameObject.Find ("MainPartChild");
 
+		lastPiece = mainPart; //Bu child olması gerekebilir
 		
 	}
 	
@@ -43,6 +74,9 @@ public class TheGod : MonoBehaviour
 	{
 		
 	}
+
+
+
 
 
 	static public void getSlaveClick (int incomingSlaveClick)
@@ -73,6 +107,7 @@ public class TheGod : MonoBehaviour
 
 			} else {
 
+				if ( !isSymmetric [pieceNumber] )
 				enterChanger ();
 
 			}
@@ -88,31 +123,60 @@ public class TheGod : MonoBehaviour
 
 		otherOut = true;
 
-		isThereAClone = true;
 		piece = GameObject.Find ("Piece" + pieceNumber); 
 		piece = (GameObject)Instantiate (piece);
+
+		//piece.transform.eulerAngles = new Vector3( mainPart.transform.eulerAngles.x, mainPart.transform.eulerAngles.y , mainPart.transform.eulerAngles.z );
+
+		//piece.transform.rotation = mainPart.transform.rotation;
+		//piece.transform.rotation.eulerAngles.y = mainPart.transform.rotation.eulerAngles.y;
+		//piece.transform.rotation.eulerAngles.z = mainPart.transform.rotation.eulerAngles.z;
+
+
+		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
+		Debug.Log ("endPointPos = " +endPointPos);
+
+		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
+		Debug.Log ("lookAtPos = " +lookAtPos);
+
+		piece.transform.position = endPointPos;  // Parçayı bir önceki parçanın end pos'una koyar
+		//Debug.Log ("endPointPos = " +endPointPos);
+
+		piece.transform.LookAt (lookAtPos);  // Parçayı bir önceki parçanın LookAtPointine çevirir
+		//Debug.Log ("endPointPos = " +endPointPos);
+		//piece.transform.eulerAngles.x = 0;
+		//piece.transform.eulerAngles = new Vector3( piece.transform.eulerAngles.x, piece.transform.eulerAngles.y , 0 );
+		//piece.transform.rotation.z = Quaternion.Euler( 0);
+		piece.transform.rotation = Quaternion.Euler(piece.transform.eulerAngles.x,piece.transform.eulerAngles.y, mainPart.transform.eulerAngles.y);
+		Debug.Log ("piece.transform.euler = " +piece.transform.eulerAngles);
+		//piece.transform.Rotate (new Vector3(0,0, -1*piece.transform.eulerAngles.x));
+		Debug.Log ("piece.transform.rotation = " +piece.transform.rotation);
+
+
+		purePiece = piece.transform.GetChild (0).gameObject;   // Parçanın kendisini tanımlar (saf parça), parçanın girişini belirlemede kullanılır
+		endPoint = purePiece.transform.GetChild (0).gameObject;   //  Parçanın endpointini tanımlar, endpoint diğer parçanın oturacağı yeri belirler
+		lookAtPoint = purePiece.transform.GetChild (2).gameObject;  //  Parçanın lookatpointini tanımlar, lookatpoint diğer parçanın bakacağı yer/yöndür
+
+
 		integrateToMainPart ();
+		isThereAClone = true;
 
 
 
 	}
 
-	static void integrateToMainPart ()
-	{
+	/*static void positionsFunc () {
 
 		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
 		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
-
-		purePiece = piece.transform.GetChild (0).gameObject;   // Parçanın kendisini tanımlar (saf parça), parçanın girişini belirlemede kullanılır
-		endPoint = purePiece.transform.GetChild (0).gameObject;   //  Parçanın endpointini tanımlar, endpoint diğer parçanın oturacağı yeri belirler
-		lookAtPoint = purePiece.transform.GetChild (1).gameObject;  //  Parçanın lookatpointini tanımlar, lookatpoint diğer parçanın bakacağı yer/yöndür
-
-
-
 		piece.transform.position = endPointPos;  // Parçayı bir önceki parçanın end pos'una koyar
 		piece.transform.LookAt (lookAtPos);  // Parçayı bir önceki parçanın LookAtPointine çevirir
 
-	
+	}*/
+
+	static void integrateToMainPart ()
+	{
+
 		piece.transform.parent = mainPart.transform;
 		//Destroy (piece.GetComponent<MouseRotation>()); 
 		piece.name = "Piece" + pieceNumber + "Clone" + cloneCount;
@@ -124,6 +188,11 @@ public class TheGod : MonoBehaviour
 	static void ChangePiece ()
 	{
 		Destroy (piece);
+
+		purePiece = lastPiece.transform.GetChild (0).gameObject;   
+		endPoint = purePiece.transform.GetChild (0).gameObject;   
+		lookAtPoint = purePiece.transform.GetChild (2).gameObject;
+
 		CreatePiece ();
 	}
 
@@ -132,6 +201,10 @@ public class TheGod : MonoBehaviour
 		if (pieceNumber != 0) {
 			cloneCount++;
 			isThereAClone = false;
+			lastPiece = piece;
+			//endPoint = piece;
+			//lookAtPoint = piece.transform.GetChild (0).transform.GetChild (2).gameObject; 
+			// başlangıçta mainpart yüklü(sarı nokta olan) sonra bunun için nokta yüklemek yerine childları yüklüyoruz HATA
 		}
 	}
 
@@ -147,32 +220,37 @@ public class TheGod : MonoBehaviour
 
 
 			 
+			purePiece.transform.position += forward * objectDetails[pieceNumber,0];
+			purePiece.transform.position += right * objectDetails[pieceNumber,1];
+			purePiece.transform.position += up * objectDetails[pieceNumber,2];
 
-			purePiece.transform.position += right * 0.5f;
-			purePiece.transform.position += up * -0.5f;
+			endPoint.transform.position += forward * objectDetails[pieceNumber,3];
+			endPoint.transform.position += right * objectDetails[pieceNumber,4];
+			endPoint.transform.position += up * objectDetails[pieceNumber,5];
 
-			endPoint.transform.position += right * 1.75f;
-			endPoint.transform.position += up * 0.75f;
+			purePiece.transform.Rotate (Vector3.forward * objectDetails[pieceNumber,6]);
+			purePiece.transform.Rotate (Vector3.right * objectDetails[pieceNumber,7]);
+			purePiece.transform.Rotate (Vector3.up * objectDetails[pieceNumber,8]);
 
-			purePiece.transform.Rotate (Vector3.forward * 90f);
-			purePiece.transform.Rotate (Vector3.up * 180f);
-
-
+			lookAtPoint = purePiece.transform.GetChild (1).gameObject;
 
 			otherOut = false;
 
 		} else {
 
-			purePiece.transform.position += right * -0.5f;
-			purePiece.transform.position += up * 0.5f;
+			purePiece.transform.position -= forward * objectDetails[pieceNumber,0];
+			purePiece.transform.position -= right * objectDetails[pieceNumber,1];
+			purePiece.transform.position -= up * objectDetails[pieceNumber,2];
 
-			endPoint.transform.position += right * -1.75f;
-			endPoint.transform.position += up * -0.75f;
+			endPoint.transform.position -= forward * objectDetails[pieceNumber,3];
+			endPoint.transform.position -= right * objectDetails[pieceNumber,4];
+			endPoint.transform.position -= up * objectDetails[pieceNumber,5];
 
-			purePiece.transform.Rotate (Vector3.forward * 90f);
-			purePiece.transform.Rotate (Vector3.up * -180f);
+			purePiece.transform.Rotate (Vector3.forward * objectDetails[pieceNumber,6]);
+			purePiece.transform.Rotate (Vector3.right * objectDetails[pieceNumber,7]);
+			purePiece.transform.Rotate (Vector3.up * objectDetails[pieceNumber,8]);
 
-
+			lookAtPoint = purePiece.transform.GetChild (2).gameObject;
 
 
 			otherOut = true;
@@ -181,8 +259,6 @@ public class TheGod : MonoBehaviour
 
 
 	}
-
-
 
 
 

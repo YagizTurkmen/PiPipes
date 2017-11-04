@@ -2,28 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece3 : MonoBehaviour {
+public class Piece3 : MonoBehaviour
+{
 
 	int Piecenumber = 3;
 
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 
 
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
 
 
 	}
 
-	void OnMouseDown () {
+	void OnMouseDown ()
+	{
+		
+		if (gameObject.name == "Piece" + Piecenumber + "Child") {
 
-		if (gameObject.name == "Piece" + Piecenumber) {
 			TheGod.getSlaveClick (incomingSlaveClick: Piecenumber);
+
 		}
 
 	}
