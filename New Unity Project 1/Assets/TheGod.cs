@@ -16,6 +16,8 @@ public class TheGod : MonoBehaviour
 	static GameObject mainPart;
 	static GameObject lastPiece;
 
+	//static GameObject temporary;
+
 
 	static Vector3 endPointPos;
 	static Transform lookAtPos;
@@ -65,7 +67,7 @@ public class TheGod : MonoBehaviour
 
 		lookAtPoint = GameObject.Find ("MainPartChild");
 
-		lastPiece = mainPart; //Bu child olması gerekebilir
+		lastPiece = mainPart;
 		
 	}
 	
@@ -118,6 +120,17 @@ public class TheGod : MonoBehaviour
 
 	}
 
+	static void ChangePiece ()
+	{
+		Destroy (piece);
+
+		purePiece = lastPiece.transform.GetChild (0).gameObject;   
+		endPoint = purePiece.transform.GetChild (0).gameObject;   
+		lookAtPoint = purePiece.transform.GetChild (2).gameObject;
+
+		CreatePiece ();
+	}
+
 	static void CreatePiece ()
 	{
 
@@ -126,32 +139,7 @@ public class TheGod : MonoBehaviour
 		piece = GameObject.Find ("Piece" + pieceNumber); 
 		piece = (GameObject)Instantiate (piece);
 
-		//piece.transform.eulerAngles = new Vector3( mainPart.transform.eulerAngles.x, mainPart.transform.eulerAngles.y , mainPart.transform.eulerAngles.z );
-
-		//piece.transform.rotation = mainPart.transform.rotation;
-		//piece.transform.rotation.eulerAngles.y = mainPart.transform.rotation.eulerAngles.y;
-		//piece.transform.rotation.eulerAngles.z = mainPart.transform.rotation.eulerAngles.z;
-
-
-		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
-		Debug.Log ("endPointPos = " +endPointPos);
-
-		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
-		Debug.Log ("lookAtPos = " +lookAtPos);
-
-		piece.transform.position = endPointPos;  // Parçayı bir önceki parçanın end pos'una koyar
-		//Debug.Log ("endPointPos = " +endPointPos);
-
-		piece.transform.LookAt (lookAtPos);  // Parçayı bir önceki parçanın LookAtPointine çevirir
-		//Debug.Log ("endPointPos = " +endPointPos);
-		//piece.transform.eulerAngles.x = 0;
-		//piece.transform.eulerAngles = new Vector3( piece.transform.eulerAngles.x, piece.transform.eulerAngles.y , 0 );
-		//piece.transform.rotation.z = Quaternion.Euler( 0);
-		piece.transform.rotation = Quaternion.Euler(piece.transform.eulerAngles.x,piece.transform.eulerAngles.y, mainPart.transform.eulerAngles.y);
-		Debug.Log ("piece.transform.euler = " +piece.transform.eulerAngles);
-		//piece.transform.Rotate (new Vector3(0,0, -1*piece.transform.eulerAngles.x));
-		Debug.Log ("piece.transform.rotation = " +piece.transform.rotation);
-
+		positionsFunc ();
 
 		purePiece = piece.transform.GetChild (0).gameObject;   // Parçanın kendisini tanımlar (saf parça), parçanın girişini belirlemede kullanılır
 		endPoint = purePiece.transform.GetChild (0).gameObject;   //  Parçanın endpointini tanımlar, endpoint diğer parçanın oturacağı yeri belirler
@@ -165,14 +153,20 @@ public class TheGod : MonoBehaviour
 
 	}
 
-	/*static void positionsFunc () {
+	static void positionsFunc () {
 
 		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
 		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
+
+
+
+
+
+
 		piece.transform.position = endPointPos;  // Parçayı bir önceki parçanın end pos'una koyar
 		piece.transform.LookAt (lookAtPos);  // Parçayı bir önceki parçanın LookAtPointine çevirir
 
-	}*/
+	}
 
 	static void integrateToMainPart ()
 	{
@@ -182,30 +176,48 @@ public class TheGod : MonoBehaviour
 		piece.name = "Piece" + pieceNumber + "Clone" + cloneCount;
 		purePiece.name = "Piece" + pieceNumber + "ChildClone" + cloneCount;
 
+		//temporary = GameObject.Find ("Piece" + pieceNumber + "Clone" + cloneCount);
+
+		Debug.Log (piece.transform.localEulerAngles);
+
+		if ((piece.transform.localEulerAngles.x > 89.99 && piece.transform.localEulerAngles.x < 90.01) || (piece.transform.localEulerAngles.x > 179.99 && piece.transform.localEulerAngles.x < 180.01) || (piece.transform.localEulerAngles.x > 269.9 && piece.transform.localEulerAngles.x < 270.1) )
+			Debug.Log ("selam");
+
+		if ((piece.transform.localEulerAngles.y > 89.99 && piece.transform.localEulerAngles.y < 90.01) || (piece.transform.localEulerAngles.y > 179.99 && piece.transform.localEulerAngles.y < 180.01) )
+			Debug.Log ("selam");
+
+		if ( !((piece.transform.localEulerAngles.x > 269.9 && piece.transform.localEulerAngles.x < 270.1) || (piece.transform.localEulerAngles.x > 89.9 && piece.transform.localEulerAngles.x < 90.1) || (piece.transform.localEulerAngles.x > 179.9 && piece.transform.localEulerAngles.x < 180.1) ) )
+			piece.transform.localEulerAngles = new Vector3 (0, piece.transform.localEulerAngles.y, 0);
+
+		if ( !((piece.transform.localEulerAngles.y > 269.9 && piece.transform.localEulerAngles.y < 270.1) || (piece.transform.localEulerAngles.y > 89.9 && piece.transform.localEulerAngles.y < 90.1) || (piece.transform.localEulerAngles.y > 179.9 && piece.transform.localEulerAngles.y < 180.1) ) ) 
+			piece.transform.localEulerAngles = new Vector3 (piece.transform.localEulerAngles.x, 0, 0);
+
+		piece.transform.localEulerAngles = new Vector3 (piece.transform.localEulerAngles.x, piece.transform.localEulerAngles.y, 0);
+
+		Debug.Log (piece.transform.localEulerAngles);
+
 
 	}
-
-	static void ChangePiece ()
-	{
-		Destroy (piece);
-
-		purePiece = lastPiece.transform.GetChild (0).gameObject;   
-		endPoint = purePiece.transform.GetChild (0).gameObject;   
-		lookAtPoint = purePiece.transform.GetChild (2).gameObject;
-
-		CreatePiece ();
-	}
-
+		
 	public static void MakePermenant ()
 	{
-		if (pieceNumber != 0) {
+		if (pieceNumber != 0  && isThereAClone == true) 
+		{
 			cloneCount++;
 			isThereAClone = false;
 			lastPiece = piece;
-			//endPoint = piece;
-			//lookAtPoint = piece.transform.GetChild (0).transform.GetChild (2).gameObject; 
-			// başlangıçta mainpart yüklü(sarı nokta olan) sonra bunun için nokta yüklemek yerine childları yüklüyoruz HATA
 		}
+	}
+
+	public static void Rotate () 
+	{
+		if (isThereAClone == true) 
+		{
+
+			piece.transform.Rotate (Vector3.forward * 90);
+
+		}
+
 	}
 
 	public static void enterChanger ()
