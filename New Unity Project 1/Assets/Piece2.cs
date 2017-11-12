@@ -7,6 +7,8 @@ public class Piece2 : MonoBehaviour
 
 	int Piecenumber = 2;
 
+	bool isEntered = false;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -31,6 +33,36 @@ public class Piece2 : MonoBehaviour
 		}
 			
 	}
+
+	void OnTriggerEnter (Collider other) {
+
+
+
+		if (isEntered == false) {
+
+			Debug.Log ("Enter");
+
+			isEntered = true;
+
+			Debug.Log (other.bounds);
+
+		} 
+
+
+	}
+		
+	void OnTriggerExit (Collider other) {
+
+		if (isEntered == true) {
+
+			Debug.Log ("Exit");
+
+			isEntered = false;
+		} 
+
+	}
+
+
 
 
 

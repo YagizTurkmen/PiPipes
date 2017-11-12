@@ -5,15 +5,15 @@ using UnityEngine;
 public class MainPart : MonoBehaviour {
 	int Piecenumber = 0;
 
+
 	// Use this for initialization
 	void Start () {
-		
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	/*void OnMouseDown () {
@@ -77,5 +77,6 @@ public class MainPart : MonoBehaviour {
 
 		//return MCFace.Error;
 	}*/
+	
 
 }

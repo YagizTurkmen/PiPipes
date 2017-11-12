@@ -68,6 +68,8 @@ public class TheGod : MonoBehaviour
 		lookAtPoint = GameObject.Find ("MainPartChild");
 
 		lastPiece = mainPart;
+
+
 		
 	}
 	
@@ -97,22 +99,37 @@ public class TheGod : MonoBehaviour
 		if (isThereAClone == false) {
 
 			//CREATE
+			Debug.Log ("1");
 			CreatePiece ();
+			Debug.Log ("7");
+			//purePiece.GetComponent<Collider> ().isTrigger = true;
+
 
 		} else {
 
+
+
 			if (oldPieceNumber != pieceNumber) {
+
+				//purePiece.GetComponent<Collider> ().isTrigger = false;
 
 				//DEĞİŞTİRME
 				ChangePiece ();
+
+				//purePiece.GetComponent<Collider> ().isTrigger = true;
 					
 
 			} else {
 
+				//purePiece.GetComponent<Collider> ().isTrigger = false;
+
 				if ( !isSymmetric [pieceNumber] )
 				enterChanger ();
 
+				//purePiece.GetComponent<Collider> ().isTrigger = true;
+
 			}
+				
 
 		}
 
@@ -133,6 +150,7 @@ public class TheGod : MonoBehaviour
 
 	static void CreatePiece ()
 	{
+		Debug.Log ("2");
 
 		otherOut = true;
 
@@ -155,21 +173,22 @@ public class TheGod : MonoBehaviour
 
 	static void positionsFunc () {
 
+		Debug.Log ("3");
+
 		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
 		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
 
-
-
-
-
-
 		piece.transform.position = endPointPos;  // Parçayı bir önceki parçanın end pos'una koyar
 		piece.transform.LookAt (lookAtPos);  // Parçayı bir önceki parçanın LookAtPointine çevirir
+
+		transformRounding (piece);
 
 	}
 
 	static void integrateToMainPart ()
 	{
+
+		Debug.Log ("4");
 
 		piece.transform.parent = mainPart.transform;
 		//Destroy (piece.GetComponent<MouseRotation>()); 
@@ -178,16 +197,14 @@ public class TheGod : MonoBehaviour
 
 		//temporary = GameObject.Find ("Piece" + pieceNumber + "Clone" + cloneCount);
 
+
 		Debug.Log (piece.transform.localEulerAngles);
 
-		if ((piece.transform.localEulerAngles.x > 89.99 && piece.transform.localEulerAngles.x < 90.01) || (piece.transform.localEulerAngles.x > 179.99 && piece.transform.localEulerAngles.x < 180.01) || (piece.transform.localEulerAngles.x > 269.9 && piece.transform.localEulerAngles.x < 270.1) )
-			Debug.Log ("selam");
-
-		if ((piece.transform.localEulerAngles.y > 89.99 && piece.transform.localEulerAngles.y < 90.01) || (piece.transform.localEulerAngles.y > 179.99 && piece.transform.localEulerAngles.y < 180.01) )
-			Debug.Log ("selam");
+		transformRounding (piece);
 
 		if ( !((piece.transform.localEulerAngles.x > 269.9 && piece.transform.localEulerAngles.x < 270.1) || (piece.transform.localEulerAngles.x > 89.9 && piece.transform.localEulerAngles.x < 90.1) || (piece.transform.localEulerAngles.x > 179.9 && piece.transform.localEulerAngles.x < 180.1) ) )
 			piece.transform.localEulerAngles = new Vector3 (0, piece.transform.localEulerAngles.y, 0);
+
 
 		if ( !((piece.transform.localEulerAngles.y > 269.9 && piece.transform.localEulerAngles.y < 270.1) || (piece.transform.localEulerAngles.y > 89.9 && piece.transform.localEulerAngles.y < 90.1) || (piece.transform.localEulerAngles.y > 179.9 && piece.transform.localEulerAngles.y < 180.1) ) ) 
 			piece.transform.localEulerAngles = new Vector3 (piece.transform.localEulerAngles.x, 0, 0);
@@ -203,10 +220,17 @@ public class TheGod : MonoBehaviour
 	{
 		if (pieceNumber != 0  && isThereAClone == true) 
 		{
+
+			Debug.Log ("5");
+
 			cloneCount++;
 			isThereAClone = false;
 			lastPiece = piece;
+			//purePiece.GetComponent<Collider> ().isTrigger = false;
 		}
+
+		Debug.Log ("6");
+
 	}
 
 	public static void Rotate () 
@@ -215,6 +239,8 @@ public class TheGod : MonoBehaviour
 		{
 
 			piece.transform.Rotate (Vector3.forward * 90);
+
+			transformRounding (piece);
 
 		}
 
@@ -269,10 +295,37 @@ public class TheGod : MonoBehaviour
 
 		}
 
+		transformRounding (purePiece);
+
+
+	}
+		
+	static public float NumberRounding (float number) {
+
+		//Debug.Log (number);
+
+		number = number * 1000;
+
+		number = Mathf.Round (number);
+
+		//Debug.Log (number);
+
+		number = number / 1000;
+
+
+
+		//Debug.Log (number);
+
+		return number;
 
 	}
 
+	static public void transformRounding (GameObject obj) {
 
+		obj.transform.localEulerAngles = new Vector3 (NumberRounding (obj.transform.localEulerAngles.x), NumberRounding (obj.transform.localEulerAngles.y), NumberRounding (obj.transform.localEulerAngles.z));
+		obj.transform.localPosition = new Vector3 (NumberRounding (obj.transform.localPosition.x), NumberRounding (obj.transform.localPosition.y), NumberRounding (obj.transform.localPosition.z));
 
+	}
+		
 
 }
