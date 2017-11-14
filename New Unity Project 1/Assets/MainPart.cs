@@ -8,6 +8,8 @@ public class MainPart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		//Debug.Log( gameObject.GetComponent(typeof(ScriptableObject)));
 		
 	}
 	
@@ -15,6 +17,36 @@ public class MainPart : MonoBehaviour {
 	void Update () {
 
 	}
+
+	void OnTriggerEnter (Collider other) {
+
+
+
+		//if (isEntered == false) {
+
+		Debug.Log ("MainPart Enter");
+
+		//isEntered = true;
+
+		//			Debug.Log (other.bounds);
+
+		//} 
+
+
+	}
+
+	void OnTriggerExit (Collider other) {
+
+		//if (isEntered == true) {
+
+		Debug.Log ("MainPart Exit");
+
+		//isEntered = false;
+		//} 
+
+	}
+
+
 
 	/*void OnMouseDown () {
 

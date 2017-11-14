@@ -44,7 +44,7 @@ public class Piece2 : MonoBehaviour
 
 			isEntered = true;
 
-			Debug.Log (other.bounds);
+//			Debug.Log (other.bounds);
 
 		} 
 

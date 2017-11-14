@@ -16,6 +16,8 @@ public class TheGod : MonoBehaviour
 	static GameObject mainPart;
 	static GameObject lastPiece;
 
+	 
+
 	//static GameObject temporary;
 
 
@@ -42,6 +44,7 @@ public class TheGod : MonoBehaviour
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
 		{ 0.0f, 0.5f, -0.5f, 0.0f, 1.75f, 0.75f, 90f, 0f, 180f },
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }
 
 	};
@@ -51,6 +54,7 @@ public class TheGod : MonoBehaviour
 		true,
 		true,
 		false,
+		true,
 		true,
 		true
 	
@@ -85,7 +89,8 @@ public class TheGod : MonoBehaviour
 
 	static public void getSlaveClick (int incomingSlaveClick)
 	{
-
+		incomingSlaveClick = incomingSlaveClick - 48;
+		//Debug.Log (incomingSlaveClick);
 		oldPieceNumber = pieceNumber;
 		pieceNumber = incomingSlaveClick;
 		clickControl ();
@@ -99,9 +104,7 @@ public class TheGod : MonoBehaviour
 		if (isThereAClone == false) {
 
 			//CREATE
-			Debug.Log ("1");
 			CreatePiece ();
-			Debug.Log ("7");
 			//purePiece.GetComponent<Collider> ().isTrigger = true;
 
 
@@ -150,11 +153,12 @@ public class TheGod : MonoBehaviour
 
 	static void CreatePiece ()
 	{
-		Debug.Log ("2");
 
 		otherOut = true;
 
 		piece = GameObject.Find ("Piece" + pieceNumber); 
+	
+
 		piece = (GameObject)Instantiate (piece);
 
 		positionsFunc ();
@@ -173,7 +177,6 @@ public class TheGod : MonoBehaviour
 
 	static void positionsFunc () {
 
-		Debug.Log ("3");
 
 		endPointPos = endPoint.transform.position; // Bir önceki parçadan gelen endpoint'in pozisyonunu alır, sıradaki parçanın koyulacağı yeri belirlemede kullanılır
 		lookAtPos = lookAtPoint.transform; // Bir önceki parçadan gelen lookatpoint'in pozisyounu alır, sıradaki parçanın bakacağı yönü belirlemede kullanılır
@@ -188,7 +191,6 @@ public class TheGod : MonoBehaviour
 	static void integrateToMainPart ()
 	{
 
-		Debug.Log ("4");
 
 		piece.transform.parent = mainPart.transform;
 		//Destroy (piece.GetComponent<MouseRotation>()); 
@@ -198,7 +200,7 @@ public class TheGod : MonoBehaviour
 		//temporary = GameObject.Find ("Piece" + pieceNumber + "Clone" + cloneCount);
 
 
-		Debug.Log (piece.transform.localEulerAngles);
+		//Debug.Log (piece.transform.localEulerAngles);
 
 		transformRounding (piece);
 
@@ -211,7 +213,7 @@ public class TheGod : MonoBehaviour
 
 		piece.transform.localEulerAngles = new Vector3 (piece.transform.localEulerAngles.x, piece.transform.localEulerAngles.y, 0);
 
-		Debug.Log (piece.transform.localEulerAngles);
+		//Debug.Log (piece.transform.localEulerAngles);
 
 
 	}
@@ -221,15 +223,17 @@ public class TheGod : MonoBehaviour
 		if (pieceNumber != 0  && isThereAClone == true) 
 		{
 
-			Debug.Log ("5");
 
 			cloneCount++;
 			isThereAClone = false;
 			lastPiece = piece;
+			Destroy(purePiece.GetComponent<Piece>());
+			purePiece.AddComponent<CloneScript>();
+
+			//piece.AddComponent<CloneScript> ();
 			//purePiece.GetComponent<Collider> ().isTrigger = false;
 		}
 
-		Debug.Log ("6");
 
 	}
 
