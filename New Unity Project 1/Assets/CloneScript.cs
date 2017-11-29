@@ -15,33 +15,33 @@ public class CloneScript : MonoBehaviour {
 	}
 
 
-void OnTriggerEnter (Collider x) {
+	void OnTriggerEnter (Collider other) {
 
 
 
-	//if (isEntered == false) {
+		//if (isEntered == false) {
 
-	Debug.Log ("Clone Enter");
+		Debug.Log ("MainPart Enter");
 
-	//	isEntered = true;
+		//isEntered = true;
 
-	//			Debug.Log (other.bounds);
+		//			Debug.Log (other.bounds);
 
-	//	} 
+		//} 
 
 
-}
+	}
 
-void OnTriggerExit (Collider x) {
+	void OnTriggerExit (Collider other) {
 
-	//if (isEntered == true) {
+		//if (isEntered == true) {
 
-		Debug.Log ("Clone Exit");
+		Debug.Log ("MainPart Exit");
 
-	//isEntered = false;
-	//} 
+		//isEntered = false;
+		//} 
 
-}
+	}
 
 
 

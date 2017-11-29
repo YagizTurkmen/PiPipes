@@ -20,31 +20,32 @@ public class Piece : MonoBehaviour {
 		TheGod.getSlaveClick (incomingSlaveClick: gameObject.name[5]);
 
 	}
-	void OnTriggerEnter (Collider x) {
+	void OnTriggerEnter (Collider other) {
 
 
 
 		//if (isEntered == false) {
 
-			Debug.Log ("Enter");
+		Debug.Log ("MainPart Enter");
 
-		//	isEntered = true;
+		//isEntered = true;
 
-			//			Debug.Log (other.bounds);
+		//			Debug.Log (other.bounds);
 
-	//	} 
+		//} 
 
 
 	}
 
-	void OnTriggerExit (Collider x) {
+	void OnTriggerExit (Collider other) {
 
 		//if (isEntered == true) {
 
-			Debug.Log ("Exit");
+		Debug.Log ("MainPart Exit");
 
-			//isEntered = false;
+		//isEntered = false;
 		//} 
 
 	}
+
 }

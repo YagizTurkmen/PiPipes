@@ -42,7 +42,8 @@ public class TheGod : MonoBehaviour
 		
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
-		{ 0.0f, 0.5f, -0.5f, 0.0f, 1.75f, 0.75f, 90f, 0f, 180f },
+		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
+		{ 0.0f, -1.0f, 0.0f, -2.0f, 1f, 0.0f, 0f, 0f, 90f },
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }, 
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
 		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }
@@ -53,12 +54,17 @@ public class TheGod : MonoBehaviour
 	
 		true,
 		true,
-		false,
 		true,
+		false,
 		true,
 		true
 	
 	};
+
+	public static Vector3 pureForward;
+	public static Vector3 pureUp; 
+	public static Vector3 pureRight;
+
 
 
 	// Use this for initialization
@@ -105,6 +111,7 @@ public class TheGod : MonoBehaviour
 
 			//CREATE
 			CreatePiece ();
+
 			//purePiece.GetComponent<Collider> ().isTrigger = true;
 
 
@@ -170,6 +177,11 @@ public class TheGod : MonoBehaviour
 
 		integrateToMainPart ();
 		isThereAClone = true;
+
+
+		pureForward = purePiece.transform.forward;
+		pureUp = purePiece.transform.up;
+		pureRight = purePiece.transform.right;
 
 
 
@@ -252,19 +264,19 @@ public class TheGod : MonoBehaviour
 
 	public static void enterChanger ()
 	{
-
-
 		Vector3 forward = purePiece.transform.forward;
-		Vector3 up = purePiece.transform.up;
 		Vector3 right = purePiece.transform.right;
+		Vector3 up = purePiece.transform.up;
+
+
 
 		if (otherOut == true) {
 
 
 			 
-			purePiece.transform.position += forward * objectDetails[pieceNumber,0];
-			purePiece.transform.position += right * objectDetails[pieceNumber,1];
-			purePiece.transform.position += up * objectDetails[pieceNumber,2];
+			purePiece.transform.position += pureForward * objectDetails[pieceNumber,0];
+			purePiece.transform.position += pureRight * objectDetails[pieceNumber,1];
+			purePiece.transform.position += pureUp * objectDetails[pieceNumber,2];
 
 			endPoint.transform.position += forward * objectDetails[pieceNumber,3];
 			endPoint.transform.position += right * objectDetails[pieceNumber,4];
@@ -280,17 +292,17 @@ public class TheGod : MonoBehaviour
 
 		} else {
 
-			purePiece.transform.position -= forward * objectDetails[pieceNumber,0];
-			purePiece.transform.position -= right * objectDetails[pieceNumber,1];
-			purePiece.transform.position -= up * objectDetails[pieceNumber,2];
+			purePiece.transform.position -= pureForward * objectDetails[pieceNumber,0];
+			purePiece.transform.position -= pureRight * objectDetails[pieceNumber,1];
+			purePiece.transform.position -= pureUp * objectDetails[pieceNumber,2];
 
 			endPoint.transform.position -= forward * objectDetails[pieceNumber,3];
 			endPoint.transform.position -= right * objectDetails[pieceNumber,4];
 			endPoint.transform.position -= up * objectDetails[pieceNumber,5];
 
-			purePiece.transform.Rotate (Vector3.forward * objectDetails[pieceNumber,6]);
-			purePiece.transform.Rotate (Vector3.right * objectDetails[pieceNumber,7]);
-			purePiece.transform.Rotate (Vector3.up * objectDetails[pieceNumber,8]);
+			purePiece.transform.Rotate (-1 * Vector3.forward * objectDetails[pieceNumber,6]);
+			purePiece.transform.Rotate (-1 *Vector3.right * objectDetails[pieceNumber,7]);
+			purePiece.transform.Rotate (-1 *Vector3.up * objectDetails[pieceNumber,8]);
 
 			lookAtPoint = purePiece.transform.GetChild (2).gameObject;
 
