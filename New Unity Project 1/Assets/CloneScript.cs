@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CloneScript : MonoBehaviour {
 
+	bool isEntered = false;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -19,27 +21,27 @@ public class CloneScript : MonoBehaviour {
 
 
 
-		//if (isEntered == false) {
+		if (isEntered == false) {
 
-		Debug.Log ("MainPart Enter");
+		Debug.Log ("Clone Enter");
 
-		//isEntered = true;
+		isEntered = true;
 
-		//			Debug.Log (other.bounds);
+					Debug.Log (other.bounds);
 
-		//} 
+		} 
 
 
 	}
 
 	void OnTriggerExit (Collider other) {
 
-		//if (isEntered == true) {
+		if (isEntered == true) {
 
-		Debug.Log ("MainPart Exit");
+		Debug.Log ("Clone Exit");
 
-		//isEntered = false;
-		//} 
+		isEntered = false;
+		} 
 
 	}
 

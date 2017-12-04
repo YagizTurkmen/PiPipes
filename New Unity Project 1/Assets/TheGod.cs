@@ -240,7 +240,7 @@ public class TheGod : MonoBehaviour
 			isThereAClone = false;
 			lastPiece = piece;
 			Destroy(purePiece.GetComponent<Piece>());
-			purePiece.AddComponent<CloneScript>();
+			purePiece.AddComponent<MainPart>();
 
 			//piece.AddComponent<CloneScript> ();
 			//purePiece.GetComponent<Collider> ().isTrigger = false;
