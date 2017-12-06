@@ -19,7 +19,7 @@ public class MainPart : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter (Collider other) {
+	/*void OnTriggerEnter (Collider other) {
 
 
 
@@ -29,14 +29,14 @@ public class MainPart : MonoBehaviour {
 
 		isEntered = true;
 
-					Debug.Log (other.bounds);
+		
 
 		} 
 
 
-	}
+	}*/
 
-	void OnTriggerExit (Collider other) {
+	/*void OnTriggerExit (Collider other) {
 
 		if (isEntered == true) {
 
@@ -45,7 +45,7 @@ public class MainPart : MonoBehaviour {
 		isEntered = false;
 		} 
 
-	}
+	}*/
 
 
 

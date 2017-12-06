@@ -32,7 +32,7 @@ public class Piece : MonoBehaviour {
 
 		isEntered = true;
 
-			Debug.Log (other.bounds);
+
 
 		} 
 
